@@ -342,7 +342,7 @@ export class WebRTCStats extends EventEmitter {
 
     pc.addEventListener('track', (e) => {
       const track = e.track
-      const stream = e.streams[0]
+      const stream = e.streams[0] || null
 
       // save the remote stream
       this.peersToMonitor[id].stream = stream
@@ -353,7 +353,7 @@ export class WebRTCStats extends EventEmitter {
         tag: 'track',
         peerId: id,
         data: {
-          stream: this.getStreamDetails(stream),
+          stream: stream ? this.getStreamDetails(stream) : null,
           track: this.getMediaTrackDetails(track),
           title: e.track.kind + ':' + e.track.id + ' ' + e.streams.map(function (stream) { return 'stream:' + stream.id })
         }
